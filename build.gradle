@@ -1,0 +1,14 @@
+apply plugin : 'war'
+apply plugin : 'eclipse-wtp'
+
+dependencies {
+	compile project(':devframe-common')
+	compile group: 'org.springframework', name: 'spring-webmvc', version: '5.1.0.RELEASE'
+	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.1.0.RELEASE'
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+	compile group: 'org.apache.tiles', name: 'tiles-core', version: '3.0.8'
+	compile group: 'org.apache.tiles', name: 'tiles-jsp', version: '3.0.8'
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+}
