@@ -12,13 +12,13 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+	<resources mapping="/resources/**" location="/resources/" />
+
 	<annotation-driven />
 
 	<context:component-scan base-package="org.devframe.web">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-
-	<resources mapping="/resources/**" location="/resources/" />
 
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<beans:property name="order" value="1" />
