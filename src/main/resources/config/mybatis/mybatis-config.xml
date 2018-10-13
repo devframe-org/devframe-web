@@ -14,8 +14,4 @@
 		<package name="org.devframe" />
 	</typeAliases>
 
-	<!-- <mappers>
-		<package name="org.devframe.**.dao" />
-	</mappers> -->
-
 </configuration>
