@@ -43,18 +43,6 @@
 		</authentication-provider -->
 	</authentication-manager>
 
-	<beans:bean id="authDao" class="com.fwc.auth.dao.AuthDao">
-		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
-   	</beans:bean>
-
-	<beans:bean id="authService" class="com.fwc.auth.service.AuthService">
-		<beans:property name="authDao" ref="authDao" />
-   	</beans:bean>
-
-	<beans:bean id="authSecuredObjectService" class="com.fwc.auth.service.AuthSecuredObjectService">
-		<beans:property name="authDao" ref="authDao" />
-	</beans:bean>
-
 	<beans:bean id="customAuthenticationSuccessHandler" class="org.devframe.web.common.security.CustomAuthenticationSuccessHandler">
 		<beans:property name="targetUrlParameter" value="loginRedirect" />
 		<beans:property name="defaultTargetUrl" value="/" />
@@ -81,8 +69,8 @@
 
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<beans:bean id="requestMap" class="com.fwc.auth.custom.AuthCustomResourceMapFactoryBean" init-method="init">
-		<beans:property name="authSecuredObjectService" ref="authSecuredObjectService" />
+	<beans:bean id="requestMap" class="org.devframe.web.common.security.CustomResourceMapFactoryBean" init-method="init">
+		<beans:property name="securedObjectService" ref="authSecuredObjectService" />
 	</beans:bean>
 
 	<beans:bean id="authCustomFilterInvocationSecurityMetadataSource" class="com.fwc.auth.custom.AuthCustomFilterInvocationSecurityMetadataSource">
@@ -121,6 +109,18 @@
 	<beans:bean id="roleHierarchyVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
 		<beans:constructor-arg ref="roleHierarchy" />
 		<!-- beans:property name="rolePrefix" value="" / -->
+	</beans:bean>
+
+	<beans:bean id="authDao" class="org.devframe.web.common.dao.AuthDao">
+		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+   	</beans:bean>
+
+	<beans:bean id="authService" class="com.fwc.auth.service.AuthService">
+		<beans:property name="authDao" ref="authDao" />
+   	</beans:bean>
+
+	<beans:bean id="authSecuredObjectService" class="com.fwc.auth.service.AuthSecuredObjectService">
+		<beans:property name="authDao" ref="authDao" />
 	</beans:bean>
 
 </beans:beans>
