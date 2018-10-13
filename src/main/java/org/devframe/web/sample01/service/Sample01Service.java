@@ -8,5 +8,6 @@ import org.devframe.web.sample01.vo.Sample01VO;
 public interface Sample01Service {
 
 	public List<Sample01Grid1VO> selectSampleList(Sample01VO sample01VO) throws Exception;
+	public void saveSample(Sample01VO sample01VO) throws Exception;
 
 }

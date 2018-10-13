@@ -26,6 +26,12 @@ public class Sample01Controller {
 
 		log.debug("sample01Grid1VOList.size() : " + sample01Grid1VOList.size());
 
+		sample01VO.setNm("1");
+		sample01VO.setCnt(1);
+		sample01VO.setCtx("1");
+
+		sample01Service.saveSample(sample01VO);
+
 		return "sample01/sample01List";
 	}
 
