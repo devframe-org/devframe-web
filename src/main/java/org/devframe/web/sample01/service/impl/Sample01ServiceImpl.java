@@ -31,8 +31,6 @@ public class Sample01ServiceImpl implements Sample01Service {
 
 		log.debug("insertCnt : " + insertCnt);
 		log.debug("sn : " + sample01VO.getSn());
-
-		int a = 1 / 0;
 	}
 
 }

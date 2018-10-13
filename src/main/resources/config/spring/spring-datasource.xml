@@ -33,25 +33,4 @@
 		<property name="basePackage" value="org.devframe.**.mapper" />
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
-	<tx:annotation-driven transaction-manager="transactionManager" />
-
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="insert*" read-only="false" rollback-for="Exception" isolation="DEFAULT" propagation="REQUIRED" />
-			<tx:method name="update*" read-only="false" rollback-for="Exception" isolation="DEFAULT" propagation="REQUIRED" />
-			<tx:method name="delete*" read-only="false" rollback-for="Exception" isolation="DEFAULT" propagation="REQUIRED" />
-			<tx:method name="save*" read-only="false" rollback-for="Exception" isolation="DEFAULT" propagation="REQUIRED" />
-			<tx:method name="*" read-only="true" isolation="DEFAULT" propagation="REQUIRED" />
-		</tx:attributes>
-	</tx:advice>
-
-	<aop:config proxy-target-class="true">
-		<aop:pointcut id="pointcut" expression="execution(* org.devframe..service.impl.*.*(..))" />
-		<aop:advisor pointcut-ref="pointcut" advice-ref="txAdvice" />
-	</aop:config>
-
 </beans>
