@@ -16,6 +16,10 @@ public class CustomResourceMapFactoryBean implements FactoryBean<LinkedHashMap<R
 	private SecuredObjectService securedObjectService;
 	private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap;
 
+	public void init() throws Exception {
+		requestMap = securedObjectService.selectRscRoleAllList();
+	}
+
 	@Override
 	public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getObject() throws Exception {
 		return requestMap;
@@ -29,10 +33,6 @@ public class CustomResourceMapFactoryBean implements FactoryBean<LinkedHashMap<R
 	@Override
 	public boolean isSingleton() {
 		return true;
-	}
-
-	public void init() throws Exception {
-		requestMap = securedObjectService.selectResourceAuthAll();
 	}
 
 }

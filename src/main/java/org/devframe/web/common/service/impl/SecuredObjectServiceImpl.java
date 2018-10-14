@@ -1,73 +1,72 @@
-//package org.devframe.web.common.service.impl;
-//
-//import java.util.HashMap;
-//import java.util.LinkedHashMap;
-//import java.util.LinkedList;
-//import java.util.List;
-//import java.util.Map;
-//
-//import org.devframe.web.common.service.SecuredObjectService;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.security.access.ConfigAttribute;
-//import org.springframework.security.access.SecurityConfig;
-//import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-//import org.springframework.security.web.util.matcher.RequestMatcher;
-//
-//import lombok.Data;
-//import lombok.extern.slf4j.Slf4j;
-//
-//@Slf4j
-//@Data
-//public class SecuredObjectServiceImpl implements SecuredObjectService {
-//
-//	private AuthDao authDao;
-//
-//	public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> selectResourceAuthAll() {
-//		LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap = new LinkedHashMap<RequestMatcher, List<ConfigAttribute>>();
-//
-//		List<Map<String, Object>> resourceAuthList = authDao.selectResourceAuthAll(null);
-//
-//		String preResource = null;
-//
-//		for(Map<String, Object> resourceAuthMap : resourceAuthList) {
-//			String url = (String)resourceAuthMap.get("URL");
-//			String authRole = (String)resourceAuthMap.get("ATH");
-//
-//			AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(url);
-//			List<ConfigAttribute> configAttributeList = new LinkedList<ConfigAttribute>();
-//
-//			if(preResource != null && url.equals(preResource)) {
-//				List<ConfigAttribute> preConfigAttributeList = requestMap.get(antPathRequestMatcher);
-//
-//				configAttributeList.addAll(preConfigAttributeList);
-//			}
-//
-//			configAttributeList.add(new SecurityConfig(authRole));
-//
-//			requestMap.put(antPathRequestMatcher, configAttributeList);
-//
-//			preResource = url;
-//		}
-//
-//		return requestMap;
-//	}
-//
-//	public List<ConfigAttribute> selectResourceAuth(String url) {
-//		Map<String, Object> paramMap = new HashMap<String, Object>();
-//		paramMap.put("url", url);
-//
-//		List<Map<String, Object>> resourceAuthList = authDao.selectResourceAuth(paramMap);
-//
-//		List<ConfigAttribute> configAttributeList = new LinkedList<ConfigAttribute>();
-//
-//		for(Map<String, Object> resourceAuthMap : resourceAuthList) {
-//			String authRole = (String)resourceAuthMap.get("ATH");
-//
-//			configAttributeList.add(new SecurityConfig(authRole));
-//		}
-//
-//		return configAttributeList;
-//	}
-//
-//}
+package org.devframe.web.common.service.impl;
+
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.devframe.web.common.mapper.AuthMapper;
+import org.devframe.web.common.service.SecuredObjectService;
+import org.devframe.web.common.vo.AuthVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.stereotype.Service;
+
+import lombok.Data;
+
+@Data
+@Service("securedObjectService")
+public class SecuredObjectServiceImpl implements SecuredObjectService {
+
+	@Autowired
+	private AuthMapper authMapper;
+
+	//주소 순으로 롤 권한을 체크한다. /** 가 맨 먼저 조회되면 모든 주소 호출은  ROLE_USER 이 없으면 계속 로그인 페이지만 호출되는 무한 루프에 빠진다.(로그인 주소도 ROLE_USER 로 처리되므로)
+	public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> selectRscRoleAllList() {
+		LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap = new LinkedHashMap<RequestMatcher, List<ConfigAttribute>>();
+
+		List<AuthVO> rscRoleAllList = authMapper.selectRscRoleAllList();
+
+		String preResource = null;
+
+		//주소 순으로 정렬되어야 한다.
+		for(AuthVO _authVO : rscRoleAllList) {
+			String url = _authVO.getUrl();
+			String roleId = _authVO.getRoleId();
+
+			AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(url);
+			List<ConfigAttribute> configAttributeList = new LinkedList<ConfigAttribute>();
+
+			if(preResource != null && url.equals(preResource)) {
+				List<ConfigAttribute> preConfigAttributeList = requestMap.get(antPathRequestMatcher);
+
+				configAttributeList.addAll(preConfigAttributeList);
+			}
+
+			configAttributeList.add(new SecurityConfig(roleId));
+
+			requestMap.put(antPathRequestMatcher, configAttributeList);
+
+			preResource = url;
+		}
+
+		return requestMap;
+	}
+
+	public List<ConfigAttribute> selectRscRoleList(String url) {
+		List<AuthVO> rscRoleList = authMapper.selectRscRoleList(url);
+
+		List<ConfigAttribute> configAttributeList = new LinkedList<ConfigAttribute>();
+
+		for(AuthVO _authVO : rscRoleList) {
+			String roleId = _authVO.getRoleId();
+
+			configAttributeList.add(new SecurityConfig(roleId));
+		}
+
+		return configAttributeList;
+	}
+
+}

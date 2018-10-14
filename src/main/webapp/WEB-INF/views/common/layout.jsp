@@ -13,7 +13,7 @@
 
 <title></title>
 
-<c:import url="/WEB-INF/views/common/commonScript.jsp" />
+<c:import url="/WEB-INF/views/common/lib.jsp" />
 
 </head>
 

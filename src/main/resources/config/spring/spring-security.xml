@@ -32,16 +32,12 @@
 	</http>
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userService">
+		<authentication-provider user-service-ref="userDetailsService">
 			<password-encoder ref="bcryptPasswordEncoder" />
 		</authentication-provider>
-		<!--  authentication-provider>
-			<user-service>
-				<user name="admin" password="$2a$10$79QRAiNZIGrteNYSC/FMVOyw0fETz7H3aQQ8Y5i9UhMiiD8Awe342" authorities="ROLE_USER" />	1234
-			</user-service>
-			<password-encoder ref="bcryptPasswordEncoder" />
-		</authentication-provider -->
 	</authentication-manager>
+
+	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<beans:bean id="customAuthenticationSuccessHandler" class="org.devframe.web.common.security.CustomAuthenticationSuccessHandler">
 		<beans:property name="targetUrlParameter" value="loginRedirect" />
@@ -67,15 +63,13 @@
 		<beans:property name="useReferer" value="false" />
    	</beans:bean>
 
-	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
 	<beans:bean id="requestMap" class="org.devframe.web.common.security.CustomResourceMapFactoryBean" init-method="init">
-		<beans:property name="securedObjectService" ref="authSecuredObjectService" />
+		<beans:property name="securedObjectService" ref="securedObjectService" />
 	</beans:bean>
 
-	<beans:bean id="authCustomFilterInvocationSecurityMetadataSource" class="com.fwc.auth.custom.AuthCustomFilterInvocationSecurityMetadataSource">
+	<beans:bean id="customFilterInvocationSecurityMetadataSource" class="org.devframe.web.common.security.CustomFilterInvocationSecurityMetadataSource">
 		<beans:constructor-arg ref="requestMap" />
-		<beans:property name="authSecuredObjectService" ref="authSecuredObjectService" />
+		<beans:property name="securedObjectService" ref="securedObjectService" />
 	</beans:bean>
 
 	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
@@ -93,7 +87,7 @@
 
 	<beans:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<beans:property name="authenticationManager" ref="org.springframework.security.authenticationManager" />
-		<beans:property name="securityMetadataSource" ref="authCustomFilterInvocationSecurityMetadataSource" />
+		<beans:property name="securityMetadataSource" ref="customFilterInvocationSecurityMetadataSource" />
 		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
 	</beans:bean>
 
@@ -109,18 +103,6 @@
 	<beans:bean id="roleHierarchyVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
 		<beans:constructor-arg ref="roleHierarchy" />
 		<!-- beans:property name="rolePrefix" value="" / -->
-	</beans:bean>
-
-	<beans:bean id="authDao" class="org.devframe.web.common.dao.AuthDao">
-		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
-   	</beans:bean>
-
-	<beans:bean id="authService" class="com.fwc.auth.service.AuthService">
-		<beans:property name="authDao" ref="authDao" />
-   	</beans:bean>
-
-	<beans:bean id="authSecuredObjectService" class="com.fwc.auth.service.AuthSecuredObjectService">
-		<beans:property name="authDao" ref="authDao" />
 	</beans:bean>
 
 </beans:beans>

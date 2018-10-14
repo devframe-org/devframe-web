@@ -18,9 +18,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Data
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
@@ -66,7 +64,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 	}
 
 	public void reload() throws Exception {
-		LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadMap = securedObjectService.selectResourceAuthAll();
+		LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadMap = securedObjectService.selectRscRoleAllList();
 		Iterator<Entry<RequestMatcher, List<ConfigAttribute>>> iterator = reloadMap.entrySet().iterator();
 
 		requestMap.clear();

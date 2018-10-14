@@ -8,7 +8,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 public interface SecuredObjectService {
 
-	public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> selectResourceAuthAll();
-	public List<ConfigAttribute> selectResourceAuth(String url);
+	public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> selectRscRoleAllList();
+	public List<ConfigAttribute> selectRscRoleList(String url);
 
 }
