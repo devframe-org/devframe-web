@@ -63,12 +63,18 @@
 		<beans:property name="useReferer" value="false" />
    	</beans:bean>
 
-	<beans:bean id="requestMap" class="org.devframe.web.common.security.CustomResourceMapFactoryBean" init-method="init">
-		<beans:property name="securedObjectService" ref="securedObjectService" />
+	<beans:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="org.springframework.security.authenticationManager" />
+		<beans:property name="securityMetadataSource" ref="customFilterInvocationSecurityMetadataSource" />
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
 	</beans:bean>
 
 	<beans:bean id="customFilterInvocationSecurityMetadataSource" class="org.devframe.web.common.security.CustomFilterInvocationSecurityMetadataSource">
 		<beans:constructor-arg ref="requestMap" />
+		<beans:property name="securedObjectService" ref="securedObjectService" />
+	</beans:bean>
+
+	<beans:bean id="requestMap" class="org.devframe.web.common.security.CustomResourceMapFactoryBean" init-method="init">
 		<beans:property name="securedObjectService" ref="securedObjectService" />
 	</beans:bean>
 
@@ -85,16 +91,13 @@
 		<beans:property name="allowIfAllAbstainDecisions" value="false" />
 	</beans:bean>
 
-	<beans:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
-		<beans:property name="authenticationManager" ref="org.springframework.security.authenticationManager" />
-		<beans:property name="securityMetadataSource" ref="customFilterInvocationSecurityMetadataSource" />
-		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
-	</beans:bean>
-
 	<beans:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 		<beans:property name="hierarchy">
 			<beans:value>
-				ROLE_ADMIN > ROLE_USER
+				ROLE_ADMIN > ROLE_AGENT01
+				ROLE_ADMIN > ROLE_AGENT02
+				ROLE_AGENT01 > ROLE_USER
+				ROLE_AGENT02 > ROLE_USER
 				ROLE_USER > ROLE_ANONYMOUS
 			</beans:value>
 		</beans:property>
