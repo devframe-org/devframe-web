@@ -7,19 +7,12 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<http auto-config="true" use-expressions="true">
-		<!-- <intercept-url pattern="/login" access="permitAll" />
-		<intercept-url pattern="/resources/**" access="permitAll" />
-		<intercept-url pattern="/**" access="hasRole('USER')" /> -->
-		<!-- authentication-failure-url="/login?error" -->
-		<!-- default-target-url="/" -->
-		<!-- always-use-default-target="true" -->
 		<form-login login-page="/login"
 			username-parameter="userId"
 			password-parameter="passwd"
 			login-processing-url="/loginProc"
 			authentication-success-handler-ref="customAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="customAuthenticationFailureHandler" />
-		<!-- logout-success-url="/login?logout" -->
 		<logout logout-url="/logout"
 			success-handler-ref="customLogoutSuccessHandler"
 			invalidate-session="true" />
@@ -32,8 +25,8 @@
 	</http>
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userDetailsService2">
-			<!-- <password-encoder ref="bcryptPasswordEncoder" /> -->
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="bcryptPasswordEncoder" />
 		</authentication-provider>
 	</authentication-manager>
 
