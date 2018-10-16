@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Data
-@Service("userDetailsService")
+@Service("userDetailsService2")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	protected final MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
