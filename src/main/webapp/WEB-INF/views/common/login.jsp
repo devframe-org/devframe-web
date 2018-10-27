@@ -2,6 +2,7 @@
 
 $(document).ready(function() {
 	$("#loginBtn").click(function() {
+		alert(1);
 		$("#loginForm").submit();
 	});
 });
