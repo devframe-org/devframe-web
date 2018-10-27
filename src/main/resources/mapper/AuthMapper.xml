@@ -34,6 +34,7 @@
 			AND UG.GRP_ID = G.GRP_ID
 			AND G.GRP_ID = GR.GRP_ID
 			AND U.USER_ID = #{userId}
+		GROUP BY GR.ROLE_ID
 	</select>
 
 	<select id="selectRscRoleAllList" resultType="AuthVO">

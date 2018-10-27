@@ -32,6 +32,12 @@ public class SecuredObjectServiceImpl implements SecuredObjectService {
 		String preResource = null;
 
 		//주소 순으로 정렬되어야 한다.
+		//url 1, ROLE_USER
+		//url 1, ROLE_AGENT01
+		//url 2, ROLE_USER
+		//url 2, ROLE_AGENT02
+		///**, ROLE_ANONYMOUS
+		///**, ROLE_USER
 		for(AuthVO _authVO : rscRoleAllList) {
 			String url = _authVO.getUrl();
 			String roleId = _authVO.getRoleId();

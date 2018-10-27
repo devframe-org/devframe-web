@@ -1,7 +1,7 @@
 <script>
 
 $(document).ready(function() {
-	$("#submitBtn").click(function() {
+	$("#loginBtn").click(function() {
 		$("#loginForm").submit();
 	});
 });
@@ -13,5 +13,5 @@ $(document).ready(function() {
 <form id="loginForm" action="/loginProc" method="post">
 	Id : <input type="text" id="userId" name="userId" value="admin01" /><br/>
 	Password : <input type="password" id="passwd" name="passwd" value="1234" /><br/>
-	<input type="button" id="submitBtn" value="Login" />
+	<input type="button" id="loginBtn" value="Login" />
 </form>

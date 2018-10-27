@@ -67,10 +67,6 @@
 		<beans:property name="securedObjectService" ref="securedObjectService" />
 	</beans:bean>
 
-	<beans:bean id="requestMap" class="org.devframe.web.common.security.CustomResourceMapFactoryBean" init-method="init">
-		<beans:property name="securedObjectService" ref="securedObjectService" />
-	</beans:bean>
-
 	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<beans:constructor-arg>
 			<beans:list>
@@ -84,6 +80,15 @@
 		<beans:property name="allowIfAllAbstainDecisions" value="false" />
 	</beans:bean>
 
+	<beans:bean id="requestMap" class="org.devframe.web.common.security.CustomResourceMapFactoryBean" init-method="init">
+		<beans:property name="securedObjectService" ref="securedObjectService" />
+	</beans:bean>
+
+	<beans:bean id="roleHierarchyVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
+		<beans:constructor-arg ref="roleHierarchy" />
+		<!-- beans:property name="rolePrefix" value="" / -->
+	</beans:bean>
+
 	<beans:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 		<beans:property name="hierarchy">
 			<beans:value>
@@ -94,11 +99,6 @@
 				ROLE_USER > ROLE_ANONYMOUS
 			</beans:value>
 		</beans:property>
-	</beans:bean>
-
-	<beans:bean id="roleHierarchyVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
-		<beans:constructor-arg ref="roleHierarchy" />
-		<!-- beans:property name="rolePrefix" value="" / -->
 	</beans:bean>
 
 </beans:beans>

@@ -28,20 +28,19 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 		log.debug("Access is denied. isAjaxCall : " + isAjaxCall);
 
 		if(!response.isCommitted()) {
-			if(StringUtils.isEmpty(errorPage)) {
-				response.sendError(HttpServletResponse.SC_FORBIDDEN, exception.getMessage());
+			if(isAjaxCall) {
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("message", exception.getMessage());
+
+				response.getWriter().print(jsonObject.toString());
+				response.getWriter().flush();
 			} else {
-				request.setAttribute(WebAttributes.ACCESS_DENIED_403, exception);
-
-				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
-				if(isAjaxCall) {
-					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("message", exception.getMessage());
-
-					response.getWriter().print(jsonObject.toString());
-					response.getWriter().flush();
+				if(StringUtils.isEmpty(errorPage)) {
+					response.sendError(HttpServletResponse.SC_FORBIDDEN, exception.getMessage());
 				} else {
+					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+					request.setAttribute(WebAttributes.ACCESS_DENIED_403, exception);
 					request.getRequestDispatcher(errorPage).forward(request, response);
 				}
 			}

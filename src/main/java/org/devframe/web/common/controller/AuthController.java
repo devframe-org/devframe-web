@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class LoginController {
+public class AuthController {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;

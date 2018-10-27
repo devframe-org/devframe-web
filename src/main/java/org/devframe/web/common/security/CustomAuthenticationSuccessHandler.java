@@ -74,22 +74,26 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		if(savedRequest != null) {
 			targetUrl = savedRequest.getRedirectUrl();
 
-			log.debug("savedRequest : " + targetUrl);
+			if(StringUtils.isNotEmpty(targetUrl)) {
+				log.debug("savedRequest : " + targetUrl);
 
-			return targetUrl;
+				return targetUrl;
+			}
 		}
 
-		if(useReferer && StringUtils.isEmpty(targetUrl)) {
+		if(useReferer) {
 			targetUrl = request.getHeader("Referer");
 
-			log.debug("useReferer : " + targetUrl);
+			if(StringUtils.isNotEmpty(targetUrl)) {
+				log.debug("useReferer : " + targetUrl);
+
+				return targetUrl;
+			}
 		}
 
-		if(StringUtils.isEmpty(targetUrl)) {
-			targetUrl = defaultTargetUrl;
+		targetUrl = defaultTargetUrl;
 
-			log.debug("defaultTargetUrl : " + targetUrl);
-		}
+		log.debug("defaultTargetUrl : " + targetUrl);
 
 		return targetUrl;
 	}
