@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.devframe.web.sample02.mapper.Sample02Mapper">
+
+	<select id="selectSampleList" parameterType="Sample02VO" resultType="Sample02Grid1VO">
+		SELECT
+			SN
+			, NM
+			, CNT
+			, CTX
+			, DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
+			, DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+		FROM TB_SAMPLE02
+		ORDER BY REG_DT DESC
+	</select>
+
+	<select id="selectSample" parameterType="Sample02VO" resultType="Sample02VO">
+		SELECT
+			SN
+			, NM
+			, CNT
+			, CTX
+			, DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
+			, DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+		FROM TB_SAMPLE02
+		WHERE SN = #{sn}
+	</select>
+
+	<insert id="insertSample" parameterType="Sample02VO" useGeneratedKeys="true" keyProperty="sn">
+		INSERT INTO TB_SAMPLE02 (
+			NM
+			, CNT
+			, CTX
+			, REG_DT
+			, MOD_DT
+		) VALUES (
+			#{nm}
+			, #{cnt}
+			, #{ctx}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+
+	<update id="updateSample" parameterType="Sample02VO">
+		UPDATE TB_SAMPLE02 SET
+			NM = #{nm}
+			, CNT = #{cnt}
+			, CTX = #{ctx}
+			, MOD_DT = NOW()
+		WHERE SN = #{sn}
+	</update>
+
+	<delete id="deleteSample" parameterType="Sample02VO">
+		DELETE FROM TB_SAMPLE02
+		WHERE SN = #{sn}
+	</delete>
+
+</mapper>
