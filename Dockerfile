@@ -1,6 +1,6 @@
 FROM devframe-tomcat
 
-USER tomcat
+USER webwas
 
 COPY k8s/tomcat/conf/server.xml $CATALINA_HOME/conf/server.xml
 COPY k8s/tomcat/bin/catalina.sh $CATALINA_HOME/bin/catalina.sh
