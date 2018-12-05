@@ -1,14 +1,18 @@
 package org.devframe.web.sample01.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.devframe.web.sample01.service.Sample01Service;
 import org.devframe.web.sample01.vo.Sample01Grid1VO;
 import org.devframe.web.sample01.vo.Sample01VO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +37,16 @@ public class Sample01Controller {
 		sample01Service.saveSample(sample01VO);
 
 		return "sample01/sample01List";
+	}
+
+	@RequestMapping(value = "/save1", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> save1(@RequestBody Sample01VO sample01VO) throws Exception {
+		return new HashMap<String, Object>();
+	}
+
+	@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> save2(@RequestBody Map<String, Object> paramMap) throws Exception {
+		return paramMap;
 	}
 
 }

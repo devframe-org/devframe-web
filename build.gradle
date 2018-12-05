@@ -25,4 +25,9 @@ dependencies {
 	compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: '1.3.1.RELEASE'
 	//compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
 	compile group: 'biz.paluch.redis', name: 'lettuce', version: '3.5.0.Final'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+	compile group: 'com.navercorp.lucy', name: 'lucy-xss', version: '1.6.3'
+
+	//@RequestBody, @ResponseBody 동작시키기 위해 반드시 추가해야 함(없으면 바인딩 안됨, 이와 관련한 별 다른 스프링 설정은 없음)
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
 }
