@@ -1,4 +1,4 @@
-FROM kcd-tomcat
+FROM devframe-tomcat
 
 USER tomcat
 
