@@ -15,7 +15,8 @@
 	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration" />
 
 	<bean class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
-		<property name="hostName" value="192.168.99.100" />
+		<property name="hostName" value="192.168.99.100" /><!-- external ip and port -->
+		<!-- <property name="hostName" value="redis" /> --><!-- container name link case success -->
 		<property name="port" value="6379" />
 		<property name="database" value="0" />
 	</bean>
