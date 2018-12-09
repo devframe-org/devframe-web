@@ -1,15 +1,15 @@
 FROM devframe-tomcat
 
-USER webwas
+USER root
 
-COPY k8s/tomcat/conf/server.xml $CATALINA_HOME/conf/server.xml
-COPY k8s/tomcat/bin/catalina.sh $CATALINA_HOME/bin/catalina.sh
+COPY k8s/tomcat/server.xml $CATALINA_HOME/conf/server.xml
+COPY k8s/tomcat/catalina.sh $CATALINA_HOME/bin/catalina.sh
 
-RUN mkdir /data/devframew-web
+RUN mkdir -p /data/web
 RUN mkdir -p /data/logs/web
 
-ADD build/libs/devframe-web-1.0.war /data/devframew-web/
+ADD build/libs/devframe-web-1.0.war /data/web/
 
-RUN cd /data/devframew-web && jar -xvf devframe-web-1.0.war && rm -rf devframe-web-1.0.war
+RUN cd /data/web && jar -xvf devframe-web-1.0.war && rm -rf devframe-web-1.0.war
 
 CMD ["catalina.sh", "run"]

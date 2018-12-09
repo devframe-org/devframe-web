@@ -1,0 +1,13 @@
+*. /devframe-web/k8s/tomcat/catalina.sh
+
+JAVA_OPTS="$JAVA_OPTS $JSSE_OPTS -Dspring.profiles.active=prd"
+
+
+
+
+
+*. /devframe-web/k8s/tomcat/server.xml
+
+<Context path="" docBase="/data/web" reloadable="false"></Context>
+
+
