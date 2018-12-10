@@ -1,9 +1,9 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: devframe-web-deployment
+  name: devframe-web-apache-deployment
   labels:
-    app: devframe-web
+    app: devframe-web-apache
 spec:
   replicas: 1
   minReadySeconds: 10
@@ -13,18 +13,18 @@ spec:
       maxUnavailable: 25%
   selector:
     matchLabels:
-      app: devframe-web
+      app: devframe-web-apache
   template:
     metadata:
       labels:
-        app: devframe-web
+        app: devframe-web-apache
     spec:
       containers:
-      - name: devframe-web
-        image: devframe/devframe-web
+      - name: devframe-web-apache
+        image: devframe/devframe-web-apache
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
           requests:
             memory: "256Mi"

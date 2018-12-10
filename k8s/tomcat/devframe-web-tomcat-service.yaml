@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: devframe-web-tomcat-service
+spec:
+  ports:
+    - name: "8009"
+      port: 8009
+      targetPort: 8009
+  selector:
+    app: devframe-web-tomcat
+  type: NodePort
