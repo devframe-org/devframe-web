@@ -41,11 +41,31 @@ public class Sample01Controller {
 
 	@RequestMapping(value = "/save1", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> save1(@RequestBody Sample01VO sample01VO) throws Exception {
-		return new HashMap<String, Object>();
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("returnValue", "1");
+
+		return returnMap;
 	}
 
 	@RequestMapping(value = "/save2", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> save2(@RequestBody Map<String, Object> paramMap) throws Exception {
+		paramMap.put("returnValue", "1");
+
+		return paramMap;
+	}
+
+	@RequestMapping(value = "/save3", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> save3(Sample01VO sample01VO) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("returnValue", "1");
+
+		return returnMap;
+	}
+
+	@RequestMapping(value = "/save4", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> save4(Map<String, Object> paramMap) throws Exception {
+		paramMap.put("returnValue", "1");
+
 		return paramMap;
 	}
 
