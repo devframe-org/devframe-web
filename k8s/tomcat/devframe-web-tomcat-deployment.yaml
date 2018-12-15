@@ -20,8 +20,8 @@ spec:
         app: devframe-web-tomcat
     spec:
       containers:
-      - name: devframe-web
-        image: devframe/devframe-web
+      - name: devframe-web-tomcat
+        image: devframe/devframe-web-tomcat
         imagePullPolicy: Always
         ports:
         - containerPort: 8009
