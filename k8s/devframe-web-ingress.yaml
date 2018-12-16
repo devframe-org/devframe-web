@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: devframe-web-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: www.devframe.org
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: devframe-web-apache-service
+          servicePort: 80
